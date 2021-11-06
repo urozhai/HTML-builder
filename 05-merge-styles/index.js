@@ -25,7 +25,7 @@ async function copyContent(file) {
   }
 }
 
-async function cssBundle() {
+async function createCSSBundle() {
   try {
     const cssFiles = await getFiles('css');
     let content = '';
@@ -39,4 +39,4 @@ async function cssBundle() {
   }
 }
 
-cssBundle();
+createCSSBundle();
