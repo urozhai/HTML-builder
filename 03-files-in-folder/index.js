@@ -1,4 +1,3 @@
-const fs = require('fs');
 const fsPromises = require('fs/promises')
 const path = require('path');
 const stdout = process.stdout;
@@ -6,7 +5,7 @@ const stdout = process.stdout;
 async function getInfo() {
   try {
     const files = await fsPromises.readdir(path.join(__dirname, 'secret-folder'), {withFileTypes: 'true'});
-    for (file of files) {
+    for (let file of files) {
       const fileStat = await fsPromises.stat(path.join(__dirname, 'secret-folder', file.name), (err, stats) => {
         if (err) {
           stdout.write(`${err.name}: ${err.message}`);
@@ -15,8 +14,8 @@ async function getInfo() {
         }
       });
 
-      if (file.isFile() === true) {
-        stdout.write(`${file.name.slice(0, file.name.lastIndexOf('.'))} - ${path.extname(file.name).slice(1)} - ${fileStat.size / 1000}kb\n`)
+      if (file.isFile()) {
+        stdout.write(`${file.name.slice(0, file.name.lastIndexOf('.'))} - ${path.extname(file.name).slice(1)} - ${(fileStat.size / 1024).toFixed(2)} kb\n`)
       }
     }
   } catch (err) {
